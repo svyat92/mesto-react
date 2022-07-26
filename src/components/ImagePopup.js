@@ -1,7 +1,7 @@
 function ImagePopup({card, onClose}) {
 
   return (
-    <div className={card ? `popup popup_type_image popup_active` : `popup popup_type_image`}>
+    <div className={`popup ${card && 'popup_active'}`}>
       <div className="popup__image-container">
         <button
           type="button"
