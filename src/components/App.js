@@ -32,7 +32,7 @@ function App() {
     setEditAvatarClick(false);
     setEditProfileClick(false);
     setAddPlaceClick(false);
-    setSelectedCard();
+    setSelectedCard(null);
   }
 
   return (
