@@ -7,10 +7,10 @@ import ImagePopup from "./ImagePopup";
 
 function App() {
 
-  const [isEditAvatarPopupOpen, setEditAvatarClick] = useState(0);
-  const [isEditProfilePopupOpen, setEditProfileClick] = useState(0);
-  const [isAddPlacePopupOpen, setAddPlaceClick] = useState(0);
-  const [selectedCard, setSelectedCard] = useState();
+  const [isEditAvatarPopupOpen, setEditAvatarClick] = useState(false);
+  const [isEditProfilePopupOpen, setEditProfileClick] = useState(false);
+  const [isAddPlacePopupOpen, setAddPlaceClick] = useState(false);
+  const [selectedCard, setSelectedCard] = useState(null);
 
   function handleEditAvatarClick() {
     setEditAvatarClick(true);
