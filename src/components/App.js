@@ -1,4 +1,4 @@
-import React from "react";
+import {useState} from 'react';
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -7,10 +7,10 @@ import ImagePopup from "./ImagePopup";
 
 function App() {
 
-  const [isEditAvatarPopupOpen, setEditAvatarClick] = React.useState(0);
-  const [isEditProfilePopupOpen, setEditProfileClick] = React.useState(0);
-  const [isAddPlacePopupOpen, setAddPlaceClick] = React.useState(0);
-  const [selectedCard, setSelectedCard] = React.useState();
+  const [isEditAvatarPopupOpen, setEditAvatarClick] = useState(0);
+  const [isEditProfilePopupOpen, setEditProfileClick] = useState(0);
+  const [isAddPlacePopupOpen, setAddPlaceClick] = useState(0);
+  const [selectedCard, setSelectedCard] = useState();
 
   function handleEditAvatarClick() {
     setEditAvatarClick(true);
