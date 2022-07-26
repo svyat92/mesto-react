@@ -42,8 +42,8 @@ function Main(props) {
       </section>
 
       <section className="cards" aria-label="Интересные места">
-        {cards.map((card, i) => (
-          <div key={i}>
+        {cards.map((card) => (
+          <div key={card._id}>
             <Card
               card={card}
               onCardClick={props.onCardClick}
