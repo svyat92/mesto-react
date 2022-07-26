@@ -1,0 +1,17 @@
+.popup__form-container {
+  width: 430px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding: 34px 36px 37px 36px;
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 544px) {
+  .popup__form-container {
+    padding: 25px 22px;
+    width: calc(100% - 19px * 2);
+  }
+}

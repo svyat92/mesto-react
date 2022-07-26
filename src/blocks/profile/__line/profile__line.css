@@ -1,0 +1,11 @@
+.profile__line {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+@media screen and (max-width: 700px) {
+  .profile__line {
+    gap: 10px;
+  }
+}

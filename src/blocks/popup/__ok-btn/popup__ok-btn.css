@@ -1,0 +1,21 @@
+.popup__ok-btn {
+  border: 1px #000000 solid;
+  border-radius: 2px;
+  margin-top: 14px;
+  padding: 14px 0;
+  background-color: #000000;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+  color: #FFFFFF;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 544px) {
+  .popup__ok-btn {
+    font-size: 14px;
+    line-height: 17px;
+  }
+}
