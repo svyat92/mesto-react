@@ -3,7 +3,7 @@ import { api } from "../utils/Api";
 import { showErr } from "../utils/utils.js";
 import Card from "./Card";
 
-function Main(props) {
+function Main({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) {
   const [userName, setUserName] = useState('');
   const [userDescription, setUserDescription] = useState('');
   const [userAvatar, setUserAvatar] = useState('');
@@ -26,17 +26,17 @@ function Main(props) {
     <main className="page__content">
 
       <section className="profile">
-        <div className="profile__image-wrapper" onClick={props.onEditAvatar}>
+        <div className="profile__image-wrapper" onClick={onEditAvatar}>
           <img src={userAvatar} alt="Аватар пользователя" className="profile__avatar" />
         </div>
         <div className="profile__info">
           <div className="profile__line">
             <h1 className="profile__title">{userName}</h1>
-            <button type="button" className="profile__edit-btn link" onClick={props.onEditProfile}></button>
+            <button type="button" className="profile__edit-btn link" onClick={onEditProfile}></button>
           </div>
           <p className="profile__subtitle">{userDescription}</p>
         </div>
-        <button type="button" className="profile__add-btn link" onClick={props.onAddPlace}></button>
+        <button type="button" className="profile__add-btn link" onClick={onAddPlace}></button>
       </section>
 
       <section className="cards" aria-label="Интересные места">
@@ -44,7 +44,7 @@ function Main(props) {
           <div key={card._id}>
             <Card
               card={card}
-              onCardClick={props.onCardClick}
+              onCardClick={onCardClick}
             />
           </div>
         ))}
