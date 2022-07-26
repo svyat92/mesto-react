@@ -87,6 +87,7 @@ function App() {
         title="Новое место"
         isOpen={isAddPlacePopupOpen}
         onClose={closeAllPopups}
+        buttonText="Создать"
       >
         <>
           <label className="form__field">
@@ -107,6 +108,7 @@ function App() {
         title="Вы уверены?"
         isOpen={false}
         onClose={closeAllPopups}
+        buttonText="Да"
       />
 
       <ImagePopup
