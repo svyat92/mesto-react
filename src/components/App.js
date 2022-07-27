@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import { useState } from 'react';
 import Header from "./Header";
 import Main from "./Main";
 import Footer from "./Footer";
@@ -53,13 +53,11 @@ function App() {
         isOpen={isEditAvatarPopupOpen}
         onClose={closeAllPopups}
       >
-        <>
-          <label className="form__field">
-            <input id="avatar-input" type="url" className="form__input form__input_content_title" name="avatar"
-              placeholder="Ссылка на картинку" required autoComplete="off" />
-            <span className="form__input-error avatar-input-error"></span>
-          </label>
-        </>
+        <label className="form__field">
+          <input id="avatar-input" type="url" className="form__input form__input_content_title" name="avatar"
+            placeholder="Ссылка на картинку" required autoComplete="off" />
+          <span className="form__input-error avatar-input-error"></span>
+        </label>
       </PopupWithForm>
 
       <PopupWithForm
@@ -68,18 +66,16 @@ function App() {
         isOpen={isEditProfilePopupOpen}
         onClose={closeAllPopups}
       >
-        <>
-          <label className="form__field">
-            <input id="profie-name-input" type="text" className="form__input form__input_content_title" name="userName"
-              placeholder="Имя" required minLength="2" maxLength="40" autoComplete="off" />
-            <span className="form__input-error profie-name-input-error"></span>
-          </label>
-          <label className="form__field">
-            <input id="profile-about-input" type="text" className="form__input form__input_content_subtitle" name="userDesc"
-              placeholder="О себе" required minLength="2" maxLength="200" autoComplete="off" />
-            <span className="form__input-error profile-about-input-error"></span>
-          </label>
-        </>
+        <label className="form__field">
+          <input id="profie-name-input" type="text" className="form__input form__input_content_title" name="userName"
+            placeholder="Имя" required minLength="2" maxLength="40" autoComplete="off" />
+          <span className="form__input-error profie-name-input-error"></span>
+        </label>
+        <label className="form__field">
+          <input id="profile-about-input" type="text" className="form__input form__input_content_subtitle" name="userDesc"
+            placeholder="О себе" required minLength="2" maxLength="200" autoComplete="off" />
+          <span className="form__input-error profile-about-input-error"></span>
+        </label>
       </PopupWithForm>
 
       <PopupWithForm
@@ -89,18 +85,16 @@ function App() {
         onClose={closeAllPopups}
         buttonText="Создать"
       >
-        <>
-          <label className="form__field">
-            <input id="card-name-input" type="text" className="form__input form__input_content_name" name="name"
-              placeholder="Название" required minLength="2" maxLength="30" autoComplete="off" />
-            <span className="form__input-error card-name-input-error"></span>
-          </label>
-          <label className="form__field">
-            <input id="card-url-input" type="url" className="form__input form__input_content_url" name="link"
-              placeholder="Ссылка на картинку" required autoComplete="off" />
-            <span className="form__input-error card-url-input-error"></span>
-          </label>
-        </>
+        <label className="form__field">
+          <input id="card-name-input" type="text" className="form__input form__input_content_name" name="name"
+            placeholder="Название" required minLength="2" maxLength="30" autoComplete="off" />
+          <span className="form__input-error card-name-input-error"></span>
+        </label>
+        <label className="form__field">
+          <input id="card-url-input" type="url" className="form__input form__input_content_url" name="link"
+            placeholder="Ссылка на картинку" required autoComplete="off" />
+          <span className="form__input-error card-url-input-error"></span>
+        </label>
       </PopupWithForm>
 
       <PopupWithForm
