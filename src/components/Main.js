@@ -1,20 +1,16 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { api } from "../utils/Api";
 import { showErr } from "../utils/utils.js";
 import Card from "./Card";
+import { CurrentUserContext } from '../contexts/CurrentUserContext';
 
-function Main({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) {
-  const [userName, setUserName] = useState('');
-  const [userDescription, setUserDescription] = useState('');
-  const [userAvatar, setUserAvatar] = useState('');
+function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
   const [cards, setCards] = useState([]);
+  const currentUser = useContext(CurrentUserContext);
 
   useEffect(() => {
-    Promise.all([api.getUserInfo(), api.getInitialCards()])
-      .then(([user, cards]) => {
-        setUserName(user.name);
-        setUserDescription(user.about);
-        setUserAvatar(user.avatar);
+    api.getInitialCards()
+      .then((cards) => {
         setCards(cards);
       })
       .catch(() => {
@@ -27,14 +23,14 @@ function Main({onEditAvatar, onEditProfile, onAddPlace, onCardClick}) {
 
       <section className="profile">
         <div className="profile__image-wrapper" onClick={onEditAvatar}>
-          <img src={userAvatar} alt="Аватар пользователя" className="profile__avatar" />
+          <img src={currentUser ? currentUser.avatar : ''} alt="Аватар пользователя" className="profile__avatar" />
         </div>
         <div className="profile__info">
           <div className="profile__line">
-            <h1 className="profile__title">{userName}</h1>
+            <h1 className="profile__title">{currentUser ? currentUser.name : ''}</h1>
             <button type="button" className="profile__edit-btn link" onClick={onEditProfile}></button>
           </div>
-          <p className="profile__subtitle">{userDescription}</p>
+          <p className="profile__subtitle">{currentUser ? currentUser.about : ''}</p>
         </div>
         <button type="button" className="profile__add-btn link" onClick={onAddPlace}></button>
       </section>
