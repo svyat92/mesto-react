@@ -18,6 +18,19 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
       });
   }, []);
 
+  function handleCardLike(card) {
+    const isLiked = card.likes.some(i => i._id === currentUser._id);
+    api.changeLikeCardStatus(card._id, isLiked).then((newCard) => {
+      setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+    });
+  }
+
+  function handleCardDelete(card) {
+    api.deleteCard(card._id)
+      .then(() => setCards((state) => state.filter((c) => c._id !== card._id)))
+      .catch((err) => showErr(err));
+  }
+
   return (
     <main className="page__content">
 
@@ -41,6 +54,8 @@ function Main({ onEditAvatar, onEditProfile, onAddPlace, onCardClick }) {
             <Card
               card={card}
               onCardClick={onCardClick}
+              onCardLike={handleCardLike}
+              onCardDelete={handleCardDelete}
             />
           </div>
         ))}

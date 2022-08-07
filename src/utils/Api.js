@@ -138,6 +138,14 @@ class Api {
         return Promise.reject(`Ошибка: ${res.status}`);
       });
   }
+
+  changeLikeCardStatus(cardId, isLiked) {
+    if (isLiked) {
+      return this.deleteLike(cardId);
+    } else {
+      return this.putLike(cardId);
+    }
+  }
 }
 
 export const api = new Api({
