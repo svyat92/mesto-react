@@ -7,6 +7,7 @@ import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import EditAvatarPopup from './EditAvatarPopup';
 import EditProfilePopup from './EditProfilePopup';
 
 function App() {
@@ -55,6 +56,15 @@ function App() {
       .catch(err => showErr(err));
   }
 
+  function handleUpdateAvatar(user) {
+    api.patchUserAvatar(user)
+      .then(user => {
+        setCurrentUser(user);
+        closeAllPopups();
+      })
+      .catch(err => showErr(err));
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <>
@@ -68,7 +78,7 @@ function App() {
         />
         <Footer />
 
-        <PopupWithForm
+        {/* <PopupWithForm
           name="edit-avatar"
           title="Обновить аватар"
           isOpen={isEditAvatarPopupOpen}
@@ -79,7 +89,13 @@ function App() {
               placeholder="Ссылка на картинку" required autoComplete="off" />
             <span className="form__input-error avatar-input-error"></span>
           </label>
-        </PopupWithForm>
+        </PopupWithForm> */}
+
+        <EditAvatarPopup
+          isOpen={isEditAvatarPopupOpen}
+          onClose={closeAllPopups}
+          onUpdateAvatar={handleUpdateAvatar}
+        />
 
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
