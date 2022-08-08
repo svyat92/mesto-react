@@ -171,7 +171,9 @@ function App() {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
+    
       <Loader isOpen={isLoading} />
+
       <Header />
 
       <Main

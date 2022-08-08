@@ -15,6 +15,7 @@ function СonfirmDeletePopup({ isOpen, onClose, onDeleteCard }) {
       onClose={onClose}
       buttonText="Да"
       onSubmit={handleSubmit}
+      isDisabled={false}
     />
   )
 }

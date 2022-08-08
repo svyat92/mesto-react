@@ -5,22 +5,44 @@ import { CurrentUserContext } from '../contexts/CurrentUserContext';
 function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
-
-  function handleChangeName(e) {
-    setName(e.target.value);
-  }
-
-  function handleChangeDesc(e) {
-    setDescription(e.target.value);
-  }
-
   const currentUser = useContext(CurrentUserContext);
+  const [validErrors, setValidErrors] = useState({});
+  const [formValid, setFormValid] = useState(false);
+
   useEffect(() => {
     if (currentUser) {
       setName(currentUser.name);
       setDescription(currentUser.about);
+      setValidErrors({});
+      setFormValid(true);
     }
   }, [currentUser, isOpen]);
+  
+  function validateField(e) {
+    const inputName = e.target.name;
+    const validity = e.target.validity;
+    if (!validity.valid) {
+      setValidErrors({ ...validErrors, [inputName]: e.target.validationMessage });
+    } else {
+      setValidErrors({ ...validErrors, [inputName]: null });
+    }
+  }
+
+  function validateForm(e) {
+    setFormValid(e.target.closest('form').checkValidity());
+  }
+
+  function handleChangeName(e) {
+    validateField(e);
+    validateForm(e);
+    setName(e.target.value);
+  }
+
+  function handleChangeDesc(e) {
+    validateField(e);
+    validateForm(e);
+    setDescription(e.target.value);
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -37,6 +59,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={handleSubmit}
+      isDisable={!formValid}
     >
       <label className="form__field">
         <input
@@ -52,7 +75,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
           value={name}
           onChange={handleChangeName}
         />
-        <span className="form__input-error profie-name-input-error"></span>
+        <span className={`form__input-error ${validErrors.userName && 'form__input-error_active'}`}>{validErrors.userName}</span>
       </label>
       <label className="form__field">
         <input
@@ -68,7 +91,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
           value={description}
           onChange={handleChangeDesc}
         />
-        <span className="form__input-error profile-about-input-error"></span>
+        <span className={`form__input-error ${validErrors.userDesc && 'form__input-error_active'}`}>{validErrors.userDesc}</span>
       </label>
     </PopupWithForm>
   );
