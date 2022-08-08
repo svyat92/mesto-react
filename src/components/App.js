@@ -10,6 +10,7 @@ import EditAvatarPopup from './EditAvatarPopup';
 import EditProfilePopup from './EditProfilePopup';
 import AddPlacePopup from './AddPlacePopup';
 import СonfirmDeletePopup from './СonfirmDeletePopup';
+import Loader from './Loader';
 
 function App() {
 
@@ -20,8 +21,10 @@ function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [cards, setCards] = useState([]);
   const [selectedDeleteCard, setSelectedDeleteCard] = useState(null);
+  const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     Promise.all([api.getUserInfo(), api.getInitialCards()])
       .then(([user, cards]) => {
         setCurrentUser(user)
@@ -29,6 +32,9 @@ function App() {
       })
       .catch(() => {
         showErr('Не удалось получить данные с сервера')
+      })
+      .finally(() => {
+        setLoading(false);
       });
 
     // Закрываем попап по Esc
@@ -91,24 +97,32 @@ function App() {
   * Обновить профиль пользователя
   */
   function handleUpdateUser(user) {
+    setLoading(true);
     api.patchUserInfo(user)
       .then(user => {
         setCurrentUser(user);
         closeAllPopups();
       })
-      .catch(err => showErr(err));
+      .catch(err => showErr(err))
+      .finally(() => {
+        setLoading(false)
+      });
   }
 
   /**
   * Обновить аватар пользователя
   */
   function handleUpdateAvatar(user) {
+    setLoading(true);
     api.patchUserAvatar(user)
       .then(user => {
         setCurrentUser(user);
         closeAllPopups();
       })
-      .catch(err => showErr(err));
+      .catch(err => showErr(err))
+      .finally(() => {
+        setLoading(false);
+      });
   }
 
   /**
@@ -116,38 +130,48 @@ function App() {
   */
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
-    api.changeLikeCardStatus(card._id, isLiked).then((newCard) => {
-      setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
-    });
+    api.changeLikeCardStatus(card._id, isLiked)
+      .then((newCard) => {
+        setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+      })
+      .catch(err => showErr(err));
   }
 
   /**
   * Добавить новую карточку
   */
   function handleAddPlaceSubmit(card) {
+    setLoading(true);
     api.postNewCard(card)
       .then((card) => {
         setCards([card, ...cards]);
         closeAllPopups();
       })
-      .catch((err) => showErr(err));
+      .catch((err) => showErr(err))
+      .finally(() => {
+        setLoading(false);
+      });
   }
 
   /**
   * Удалить выбранную карточку
   */
   function handleConfirmDeleteSubmit() {
+    setLoading(true);
     api.deleteCard(selectedDeleteCard._id)
       .then(() => {
         setCards((state) => state.filter((c) => c._id !== selectedDeleteCard._id));
         closeAllPopups();
       })
-      .catch((err) => showErr(err));
+      .catch((err) => showErr(err))
+      .finally(() => {
+        setLoading(false);
+      });
   }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-
+      <Loader isOpen={isLoading} />
       <Header />
 
       <Main

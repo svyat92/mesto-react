@@ -14,7 +14,7 @@
   left: 0;
   background-color: #000000;
   opacity: 0;
-  transition: opacity .5s;
+  transition: opacity .3s;
   border-radius: 47%;
 }
 

@@ -1,7 +1,7 @@
 .link {
   text-decoration: none;
   cursor: pointer;
-  transition: opacity .4s;
+  transition: opacity .3s;
 }
 
 .link:hover {
