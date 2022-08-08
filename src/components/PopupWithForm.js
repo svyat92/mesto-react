@@ -13,7 +13,7 @@ function PopupWithForm({ isOpen, name, onClose, title, children, buttonText, onS
   return (
     <div 
       className={popupClassName}
-      onClick={handleOverlayClick}
+      onMouseDown={handleOverlayClick}
       >
       <div className="popup__form-container">
         <button
