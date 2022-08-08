@@ -7,6 +7,7 @@ import Footer from './Footer';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import EditProfilePopup from './EditProfilePopup';
 
 function App() {
 
@@ -18,12 +19,8 @@ function App() {
 
   useEffect(() => {
     api.getUserInfo()
-      .then((user) => {
-        setCurrentUser(user);
-      })
-      .catch(() => {
-        showErr('Не удалось получить данные с сервера')
-      });
+      .then(user => setCurrentUser(user))
+      .catch(() => showErr('Не удалось получить данные с сервера'));
   }, []);
 
   function handleEditAvatarClick() {
@@ -47,6 +44,15 @@ function App() {
     setEditProfileClick(false);
     setAddPlaceClick(false);
     setSelectedCard(null);
+  }
+
+  function handleUpdateUser(user) {
+    api.patchUserInfo(user)
+      .then(user => {
+        setCurrentUser(user);
+        closeAllPopups();
+      })
+      .catch(err => showErr(err));
   }
 
   return (
@@ -75,23 +81,11 @@ function App() {
           </label>
         </PopupWithForm>
 
-        <PopupWithForm
-          name="edit-profile"
-          title="Редактировать профиль"
+        <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
-        >
-          <label className="form__field">
-            <input id="profie-name-input" type="text" className="form__input form__input_content_title" name="userName"
-              placeholder="Имя" required minLength="2" maxLength="40" autoComplete="off" />
-            <span className="form__input-error profie-name-input-error"></span>
-          </label>
-          <label className="form__field">
-            <input id="profile-about-input" type="text" className="form__input form__input_content_subtitle" name="userDesc"
-              placeholder="О себе" required minLength="2" maxLength="200" autoComplete="off" />
-            <span className="form__input-error profile-about-input-error"></span>
-          </label>
-        </PopupWithForm>
+          onUpdateUser={handleUpdateUser}
+        />
 
         <PopupWithForm
           name="add-card"

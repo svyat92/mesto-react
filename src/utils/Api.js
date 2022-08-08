@@ -21,17 +21,14 @@ class Api {
       });
   }
 
-  patchUserInfo({ userName, userDesc }) {
+  patchUserInfo(user) {
     return fetch(`${this._serverUrl}/users/me`, {
       method: 'PATCH',
       headers: {
         authorization: this._token,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({
-        name: userName,
-        about: userDesc
-      })
+      body: JSON.stringify(user)
     })
       .then(res => {
         if (res.ok) {
