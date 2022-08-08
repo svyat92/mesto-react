@@ -1,9 +1,14 @@
 import PopupWithForm from './PopupWithForm';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
   const [name, setName] = useState('');
   const [link, setLink] = useState('');
+
+  useEffect(() => {
+    setName('');
+    setLink('');
+  }, [isOpen]);
 
   function handleChangeName(e) {
     setName(e.target.value);

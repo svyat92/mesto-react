@@ -11,7 +11,7 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
     if (currentUser) {
       avatarRef.current.value = currentUser.avatar;
     }
-  }, [currentUser]);
+  }, [currentUser, isOpen]);
 
   function handleSubmit(e) {
     e.preventDefault();
