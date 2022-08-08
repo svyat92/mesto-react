@@ -4,12 +4,12 @@ import { showErr } from '../utils/utils.js';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
-import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import EditAvatarPopup from './EditAvatarPopup';
 import EditProfilePopup from './EditProfilePopup';
 import AddPlacePopup from './AddPlacePopup';
+import СonfirmDeletePopup from './СonfirmDeletePopup';
 
 function App() {
 
@@ -19,6 +19,7 @@ function App() {
   const [selectedCard, setSelectedCard] = useState(null);
   const [currentUser, setCurrentUser] = useState(null);
   const [cards, setCards] = useState([]);
+  const [selectedDeleteCard, setSelectedDeleteCard] = useState(null);
 
   useEffect(() => {
     Promise.all([api.getUserInfo(), api.getInitialCards()])
@@ -40,29 +41,55 @@ function App() {
     return () => window.removeEventListener('keydown', closePopup);
   }, []);
 
+  /**
+   * Открыть попап редактирования аватара
+   */
   function handleEditAvatarClick() {
     setEditAvatarClick(true);
   }
 
+  /**
+  * Открыть попап редактирования профиля
+  */
   function handleEditProfileClick() {
     setEditProfileClick(true);
   }
 
+  /**
+  * Открыть попап добавления новой карточки
+  */
   function handleAddPlaceClick() {
     setAddPlaceClick(true);
   }
 
+  /**
+  * Открыть попап с картинкой из выбранной
+  */
   function handleCardClick(card) {
     setSelectedCard(card);
   }
 
+  /**
+  * Отрыть попап с подтверждением удаления выбранной карточки
+  */
+  function handleCardDelete(card) {
+    setSelectedDeleteCard(card);
+  }
+
+  /**
+  * Закрыть все попапы
+  */
   function closeAllPopups() {
     setEditAvatarClick(false);
     setEditProfileClick(false);
     setAddPlaceClick(false);
     setSelectedCard(null);
+    setSelectedDeleteCard(null);
   }
 
+  /**
+  * Обновить профиль пользователя
+  */
   function handleUpdateUser(user) {
     api.patchUserInfo(user)
       .then(user => {
@@ -72,6 +99,9 @@ function App() {
       .catch(err => showErr(err));
   }
 
+  /**
+  * Обновить аватар пользователя
+  */
   function handleUpdateAvatar(user) {
     api.patchUserAvatar(user)
       .then(user => {
@@ -81,6 +111,9 @@ function App() {
       .catch(err => showErr(err));
   }
 
+  /**
+  * Поставить\снять лайк
+  */
   function handleCardLike(card) {
     const isLiked = card.likes.some(i => i._id === currentUser._id);
     api.changeLikeCardStatus(card._id, isLiked).then((newCard) => {
@@ -88,16 +121,25 @@ function App() {
     });
   }
 
-  function handleCardDelete(card) {
-    api.deleteCard(card._id)
-      .then(() => setCards((state) => state.filter((c) => c._id !== card._id)))
-      .catch((err) => showErr(err));
-  }
-
+  /**
+  * Добавить новую карточку
+  */
   function handleAddPlaceSubmit(card) {
     api.postNewCard(card)
       .then((card) => {
         setCards([card, ...cards]);
+        closeAllPopups();
+      })
+      .catch((err) => showErr(err));
+  }
+
+  /**
+  * Удалить выбранную карточку
+  */
+  function handleConfirmDeleteSubmit() {
+    api.deleteCard(selectedDeleteCard._id)
+      .then(() => {
+        setCards((state) => state.filter((c) => c._id !== selectedDeleteCard._id));
         closeAllPopups();
       })
       .catch((err) => showErr(err));
@@ -117,7 +159,7 @@ function App() {
         onCardDelete={handleCardDelete}
         cards={cards}
       />
-      
+
       <Footer />
 
       <EditAvatarPopup
@@ -138,12 +180,10 @@ function App() {
         onAddPlace={handleAddPlaceSubmit}
       />
 
-      <PopupWithForm
-        name="confirm"
-        title="Вы уверены?"
-        isOpen={false}
+      <СonfirmDeletePopup
+        isOpen={selectedDeleteCard}
         onClose={closeAllPopups}
-        buttonText="Да"
+        onDeleteCard={handleConfirmDeleteSubmit}
       />
 
       <ImagePopup
