@@ -1,7 +1,20 @@
 function PopupWithForm({ isOpen, name, onClose, title, children, buttonText, onSubmit }) {
 
+  function handleOverlayClick(e) {
+    if (e.target === e.currentTarget ) {
+      onClose();
+    }
+  }
+
+  const popupClassName = (
+    `popup popup_type_${name} ${isOpen && 'popup_active'}`
+  );
+
   return (
-    <div className={isOpen ? `popup popup_type_${name} popup_active` : `popup popup_type_${name}`}>
+    <div 
+      className={popupClassName}
+      onClick={handleOverlayClick}
+      >
       <div className="popup__form-container">
         <button
           type="button"

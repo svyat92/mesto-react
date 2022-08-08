@@ -29,6 +29,15 @@ function App() {
       .catch(() => {
         showErr('Не удалось получить данные с сервера')
       });
+
+    // Закрываем попап по Esc
+    const closePopup = (e) => {
+      if (e.keyCode === 27) {
+        closeAllPopups();
+      }
+    }
+    window.addEventListener('keydown', closePopup);
+    return () => window.removeEventListener('keydown', closePopup);
   }, []);
 
   function handleEditAvatarClick() {
@@ -96,17 +105,19 @@ function App() {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
+
       <Header />
+
       <Main
+        onEditAvatar={handleEditAvatarClick}
         onEditProfile={handleEditProfileClick}
         onAddPlace={handleAddPlaceClick}
-        onEditAvatar={handleEditAvatarClick}
-        onCloseAllPopups={closeAllPopups}
         onCardClick={handleCardClick}
         onCardLike={handleCardLike}
         onCardDelete={handleCardDelete}
         cards={cards}
       />
+      
       <Footer />
 
       <EditAvatarPopup
