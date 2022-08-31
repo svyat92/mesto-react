@@ -39,7 +39,7 @@ function Register({ onRegister }) {
           onChange={handleChange}
         />
         <input
-          // type="password"
+          type="password"
           className="start-page__input"
           name="password"
           placeholder="Пароль"
