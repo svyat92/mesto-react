@@ -1,0 +1,14 @@
+.start-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 358px;
+  margin: 60px auto 100px;
+  padding: 0;
+}
+
+@media (max-width: 320px) {
+  .start-page {
+    max-width: 260px;
+  }
+}

@@ -1,0 +1,25 @@
+.start-page__submit-btn {
+  margin-top: 216px;
+  padding: 0;
+  width: 358px;
+  height: 50px;
+  background-color: #fff;
+  color: #000;
+  border: none;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 22px;
+  text-align: center;
+}
+
+@media screen and (max-width: 767px) {
+  .start-page__submit-btn {
+    margin-top: 173px;
+    width: 260px;
+    height: 46px;
+    font-size: 16px;
+    line-height: 19px;
+  }
+}
